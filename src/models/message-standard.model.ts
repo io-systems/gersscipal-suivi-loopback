@@ -12,6 +12,11 @@ export class MessageStandard extends Entity {
 
   @property({
     type: 'string',
+  })
+  operation: string;
+
+  @property({
+    type: 'string',
     required: true,
   })
   alea: string;
@@ -35,14 +40,6 @@ export class MessageStandard extends Entity {
     type: 'date',
   })
   updatedAt?: string;
-
-  @belongsTo(() => Operation)
-  operationId: number;
-
-  @property({
-    type: 'number',
-  })
-  messageHistoryId?: number;
 
   constructor(data?: Partial<MessageStandard>) {
     super(data);

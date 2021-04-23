@@ -30,11 +30,6 @@ export class MessageStatus extends Entity {
   })
   updatedAt?: string;
 
-  @property({
-    type: 'number',
-  })
-  messageHistoryId?: number;
-
   constructor(data?: Partial<MessageStatus>) {
     super(data);
   }

@@ -36,6 +36,11 @@ export class Workstation extends Entity {
   @property({
     type: 'string',
   })
+  localization?: string;
+
+  @property({
+    type: 'string',
+  })
   description?: string;
 
   @property({
@@ -47,12 +52,6 @@ export class Workstation extends Entity {
     type: 'date',
   })
   updatedAt?: string;
-
-  @belongsTo(() => Workshop)
-  workshopId: number;
-
-  @hasMany(() => FabricationOrder)
-  fabricationOrders: FabricationOrder[];
 
   constructor(data?: Partial<Workstation>) {
     super(data);

@@ -15,8 +15,21 @@ export class MessageHistory extends Entity {
 
   @property({
     type: 'number',
+    required: true,
   })
-  idAPI?: number;
+  idAPI: number;
+
+  @property({
+    type: 'number',
+    required: true,
+  })
+  status: number;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  codem: string;
 
   @property({
     type: 'string',
@@ -25,16 +38,31 @@ export class MessageHistory extends Entity {
 
   @property({
     type: 'string',
+    required: true,
   })
-  label?: string;
+  operation: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  alea: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  label: string;
 
   @property({
     type: 'date',
+    required: true,
   })
   timestamp?: string;
 
   @property({
     type: 'number',
+    required: true,
   })
   value?: number;
 
@@ -47,18 +75,6 @@ export class MessageHistory extends Entity {
     type: 'date',
   })
   updatedAt?: string;
-
-  @hasOne(() => MessageStatus)
-  messageStatus: MessageStatus;
-
-  @belongsTo(() => Workstation)
-  workstationId: number;
-
-  @hasOne(() => Operation)
-  operation: Operation;
-
-  @hasOne(() => MessageStandard)
-  messageStandard: MessageStandard;
 
   constructor(data?: Partial<MessageHistory>) {
     super(data);

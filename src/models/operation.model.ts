@@ -30,11 +30,6 @@ export class Operation extends Entity {
   })
   updatedAt?: string;
 
-  @property({
-    type: 'number',
-  })
-  messageHistoryId?: number;
-
   constructor(data?: Partial<Operation>) {
     super(data);
   }

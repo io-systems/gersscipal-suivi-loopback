@@ -26,6 +26,11 @@ export class FabricationOrder extends Entity {
   stoppedAt?: string;
 
   @property({
+    type: 'string',
+  })
+  codem: string;
+
+  @property({
     type: 'date',
   })
   createdAt?: string;
@@ -34,11 +39,6 @@ export class FabricationOrder extends Entity {
     type: 'date',
   })
   updatedAt?: string;
-
-  @property({
-    type: 'number',
-  })
-  workstationId?: number;
 
   constructor(data?: Partial<FabricationOrder>) {
     super(data);

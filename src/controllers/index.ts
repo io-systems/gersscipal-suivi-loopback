@@ -6,10 +6,4 @@ export * from './operation.controller';
 export * from './message-standard.controller';
 export * from './message-status.controller';
 export * from './message-history.controller';
-export * from './workstation-workshop.controller';
-export * from './workstation-fabrication-order.controller';
-export * from './message-standard-operation.controller';
-export * from './message-history-message-status.controller';
-export * from './message-history-workstation.controller';
-export * from './message-history-operation.controller';
-export * from './message-history-message-standard.controller';
+
