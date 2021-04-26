@@ -15,7 +15,7 @@ export class Workstation extends Entity {
     type: 'string',
     required: true,
   })
-  divaltoCode: string;
+  codem: string;
 
   @property({
     type: 'string',
@@ -29,9 +29,8 @@ export class Workstation extends Entity {
 
   @property({
     type: 'string',
-    required: true,
   })
-  ipAddress: string;
+  ipAddress?: string;
 
   @property({
     type: 'string',
