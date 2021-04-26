@@ -26,6 +26,7 @@ export class IoSuiviApplication extends BootMixin(
     this.static('/workshop', path.join(__dirname, '../public'));
     this.static('/workstation', path.join(__dirname, '../public'));
     this.static('/operation', path.join(__dirname, '../public'));
+    this.static('/message-history', path.join(__dirname, '../public'));
     this.static('/message-standard', path.join(__dirname, '../public'));
     this.static('/message-status', path.join(__dirname, '../public'));
     this.static('/fabrication-order', path.join(__dirname, '../public'));
