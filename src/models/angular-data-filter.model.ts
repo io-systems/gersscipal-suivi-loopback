@@ -2,7 +2,7 @@ import {Entity, model, property} from '@loopback/repository';
 
 export interface FilterContent {
   name: string;
-  content?: object;
+  content?: string;
 }
 
 @model()
@@ -17,7 +17,7 @@ export class AngularDataFilter extends Entity {
 
   @property({
     type: 'array',
-    itemType: 'object',
+    itemType: 'string',
   })
   content?: FilterContent[];
 

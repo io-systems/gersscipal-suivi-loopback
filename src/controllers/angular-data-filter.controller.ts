@@ -2,7 +2,7 @@
 
 // import {inject} from '@loopback/core';
 import {repository} from '@loopback/repository';
-import {get, HttpErrors, param, post, requestBody} from '@loopback/rest';
+import {del, get, param, post, requestBody} from '@loopback/rest';
 import {AngularDataFilter, FilterContent} from '../models';
 import {AngularDataFilterRepository} from '../repositories';
 
@@ -12,6 +12,7 @@ export class AngularDataFilterController {
     public AngularDataFilterRepository: AngularDataFilterRepository
   ) { }
 
+  // création, ajout, mise à jour d'un filtre dans un tableau hash
   @post('/angular-data-filters/{hash}')
   async create(
     @param.path.string('hash') hash: string,
@@ -56,25 +57,39 @@ export class AngularDataFilterController {
     }
   }
 
+  // obtenir le contenu stocké pour hash
   @get('/angular-data-filters/{hash}')
   async get(
     @param.path.string('hash') hash: string
   ): Promise<AngularDataFilter> {
-    const cf = await this.AngularDataFilterRepository.get(hash);
-    if (cf == null) {
-      throw new HttpErrors.NotFound(
-        `Le filtre ${hash} n'a pas été trouvé.`
-      )
-    } else {
-      return cf;
-    }
+    return await this.AngularDataFilterRepository.get(hash);
   }
 
-  // @put('/angular-data-filters/{hash}')
-  // async update(
-  //   @param.path.string('hash') hash: string,
-  //   @requestBody({description: 'Custom filter'}) newCustomFilter: AngularDataFilter
-  // ): Promise<void> {
-  //   await this.AngularDataFilterRepository.set(customFilterName, newCustomFilter.content);
-  // }
+  // supprimer un filtre du tableau de filtres hash
+  @del('/angular-data-filters/{hash}/{name}')
+  async deleteFilter(
+    @param.path.string('hash') hash: string,
+    @param.path.string('name') name: string,
+  ): Promise<void> {
+    const res = await this.AngularDataFilterRepository.get(hash);
+    if (!res.content || res.content.length <= 0) return;
+    // look after filter name
+    const index = res.content.findIndex(fil => fil.name === name);
+    if (index < 0) return;
+    res.content.splice(index, 1);
+    const newFilter = new AngularDataFilter({
+      hash: hash,
+      content: res.content
+    });
+    await this.AngularDataFilterRepository.set(hash, newFilter);
+  }
+
+  // supprimer tout le contenu pour un hash
+  @del('angular-data-filters/{hash}')
+  async delete(
+    @param.path.string('hash') hash: string
+  ): Promise<void> {
+    const res = await this.AngularDataFilterRepository.delete(hash);
+  }
+
 }
