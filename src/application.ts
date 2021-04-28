@@ -30,6 +30,7 @@ export class IoSuiviApplication extends BootMixin(
     this.static('/message-standard', path.join(__dirname, '../public'));
     this.static('/message-status', path.join(__dirname, '../public'));
     this.static('/fabrication-order', path.join(__dirname, '../public'));
+    this.static('/licence', path.join(__dirname, '../public'));
 
     // Customize @loopback/rest-explorer configuration here
     this.configure(RestExplorerBindings.COMPONENT).to({
