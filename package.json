@@ -34,7 +34,9 @@
     "prestart": "npm run rebuild",
     "start": "node -r source-map-support/register .",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-    "rebuild": "npm run clean && npm run build"
+    "rebuild": "npm run clean && npm run build",
+    "dump:iotdb:structure": "mysqldump --add-drop-database --add-drop-table -h localhost -d -p iotdb > iotdb-structures.sql",
+    "dump:iotdb:all": "mysqldump --add-drop-database --add-drop-table -h localhost -p iotdb > iotdb.sql"
   },
   "repository": {
     "type": "git",
