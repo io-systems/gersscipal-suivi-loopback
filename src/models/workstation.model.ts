@@ -14,26 +14,41 @@ export class Workstation extends Entity {
   @property({
     type: 'string',
     required: true,
+    mysql: {
+      dataType: 'VARCHAR(8)'
+    }
   })
   codem: string;
 
   @property({
     type: 'string',
+    mysql: {
+      dataType: 'VARCHAR(32)'
+    }
   })
   divaltoName?: string;
 
   @property({
     type: 'string',
+    mysql: {
+      dataType: 'VARCHAR(8)'
+    }
   })
   aleaPrefix?: string;
 
   @property({
     type: 'string',
+    mysql: {
+      dataType: 'VARCHAR(15)'
+    }
   })
   ipAddress?: string;
 
   @property({
     type: 'string',
+    mysql: {
+      dataType: 'VARCHAR(8)'
+    }
   })
   localization?: string;
 

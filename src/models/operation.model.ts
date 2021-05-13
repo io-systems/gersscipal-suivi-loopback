@@ -11,7 +11,10 @@ export class Operation extends Entity {
 
   @property({
     type: 'string',
-    required: true
+    required: true,
+    mysql: {
+      dataType: 'VARCHAR(8)'
+    }
   })
   operation: string;
 

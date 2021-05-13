@@ -12,6 +12,9 @@ export class Workshop extends Entity {
   @property({
     type: 'string',
     required: true,
+    mysql: {
+      dataType: 'VARCHAR(8)'
+    }
   })
   name: string;
 

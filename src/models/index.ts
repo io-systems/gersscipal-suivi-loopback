@@ -6,4 +6,4 @@ export * from './message-status.model';
 export * from './operation.model';
 export * from './workshop.model';
 export * from './workstation.model';
-
+export * from './hmi-recipe.model';

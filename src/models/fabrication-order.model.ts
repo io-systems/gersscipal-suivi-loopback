@@ -12,6 +12,9 @@ export class FabricationOrder extends Entity {
   @property({
     type: 'string',
     required: true,
+    mysql: {
+      dataType: 'VARCHAR(12)'
+    }
   })
   ofnr: string;
 
@@ -27,6 +30,9 @@ export class FabricationOrder extends Entity {
 
   @property({
     type: 'string',
+    mysql: {
+      dataType: 'VARCHAR(8)'
+    }
   })
   codem: string;
 

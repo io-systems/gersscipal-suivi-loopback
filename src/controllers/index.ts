@@ -6,4 +6,5 @@ export * from './message-status.controller';
 export * from './operation.controller';
 export * from './ping.controller';
 export * from './workshop.controller';
-
+export * from './hmi-recipe.controller';
+export * from './hmi-recipe-file.controller';

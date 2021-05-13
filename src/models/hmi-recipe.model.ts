@@ -1,8 +1,7 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
-import {Operation} from './operation.model';
+import {Entity, model, property} from '@loopback/repository';
 
 @model()
-export class MessageStandard extends Entity {
+export class HmiRecipe extends Entity {
   @property({
     type: 'number',
     id: true,
@@ -12,6 +11,22 @@ export class MessageStandard extends Entity {
 
   @property({
     type: 'string',
+    required: true,
+    mysql: {
+      dataType: 'VARCHAR(8)'
+    }
+  })
+  codem: string;
+
+  @property({
+    type: 'number',
+    required: true,
+  })
+  index: number;
+
+  @property({
+    type: 'string',
+    required: true,
     mysql: {
       dataType: 'VARCHAR(8)'
     }
@@ -29,16 +44,12 @@ export class MessageStandard extends Entity {
 
   @property({
     type: 'string',
+    required: true,
     mysql: {
       dataType: 'VARCHAR(32)'
     }
   })
-  label?: string;
-
-  @property({
-    type: 'string',
-  })
-  description?: string;
+  label: string;
 
   @property({
     type: 'date',
@@ -50,13 +61,14 @@ export class MessageStandard extends Entity {
   })
   updatedAt?: string;
 
-  constructor(data?: Partial<MessageStandard>) {
+
+  constructor(data?: Partial<HmiRecipe>) {
     super(data);
   }
 }
 
-export interface MessageStandardRelations {
+export interface HmiRecipeRelations {
   // describe navigational properties here
 }
 
-export type MessageStandardWithRelations = MessageStandard & MessageStandardRelations;
+export type HmiRecipeWithRelations = HmiRecipe & HmiRecipeRelations;

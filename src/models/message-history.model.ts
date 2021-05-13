@@ -28,29 +28,44 @@ export class MessageHistory extends Entity {
   @property({
     type: 'string',
     required: true,
+    mysql: {
+      dataType: 'VARCHAR(8)'
+    }
   })
   codem: string;
 
   @property({
     type: 'string',
+    mysql: {
+      dataType: 'VARCHAR(12)'
+    }
   })
   ofnr?: string;
 
   @property({
     type: 'string',
     required: true,
+    mysql: {
+      dataType: 'VARCHAR(8)'
+    }
   })
   operation: string;
 
   @property({
     type: 'string',
     required: true,
+    mysql: {
+      dataType: 'VARCHAR(8)'
+    }
   })
   alea: string;
 
   @property({
     type: 'string',
     required: true,
+    mysql: {
+      dataType: 'VARCHAR(32)'
+    }
   })
   label: string;
 
