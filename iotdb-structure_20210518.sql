@@ -1,8 +1,8 @@
--- MariaDB dump 10.19  Distrib 10.5.9-MariaDB, for Linux (x86_64)
+-- MariaDB dump 10.19  Distrib 10.5.10-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: iotdb
 -- ------------------------------------------------------
--- Server version	10.5.9-MariaDB
+-- Server version	10.5.10-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -32,6 +32,26 @@ CREATE TABLE `FabricationOrder` (
   `updatedAt` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `HmiRecipe`
+--
+
+DROP TABLE IF EXISTS `HmiRecipe`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `HmiRecipe` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `codem` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `index` int(11) NOT NULL,
+  `operation` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `alea` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `label` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createdAt` datetime DEFAULT current_timestamp(),
+  `updatedAt` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +90,7 @@ CREATE TABLE `MessageStandard` (
   `operation` varchar(8) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `alea` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
   `label` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `createdAt` datetime DEFAULT current_timestamp(),
   `updatedAt` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
@@ -87,7 +107,7 @@ DROP TABLE IF EXISTS `MessageStatus`;
 CREATE TABLE `MessageStatus` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `status` int(11) NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `createdAt` datetime DEFAULT current_timestamp(),
   `updatedAt` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
@@ -103,7 +123,7 @@ DROP TABLE IF EXISTS `Operation`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Operation` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `operation` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `operation` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `createdAt` datetime DEFAULT current_timestamp(),
   `updatedAt` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -121,11 +141,11 @@ DROP TABLE IF EXISTS `Workshop`;
 CREATE TABLE `Workshop` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `createdAt` datetime DEFAULT current_timestamp(),
   `updatedAt` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -140,13 +160,13 @@ CREATE TABLE `Workstation` (
   `codem` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
   `divaltoName` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `aleaPrefix` varchar(8) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ipAddress` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ipAddress` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `localization` varchar(8) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `createdAt` datetime DEFAULT current_timestamp(),
   `updatedAt` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -158,4 +178,4 @@ CREATE TABLE `Workstation` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-28  7:51:49
+-- Dump completed on 2021-05-18  8:35:06

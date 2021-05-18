@@ -1,0 +1,2 @@
+mysqldump --add-drop-table -d -u jledun -p iotdb > "iotdb-structure_$(date +%Y%m%d).sql"
+
