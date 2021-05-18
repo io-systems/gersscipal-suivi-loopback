@@ -1,13 +1,10 @@
 // Uncomment these imports to begin using these cool features!
 
 // import {inject} from '@loopback/core';
-import { promises as fsp } from 'fs';
-import { del, get, param } from '@loopback/rest';
-import { repository } from '@loopback/repository';
-import { HmiRecipe } from '../models';
-import { Workstation } from '../models';
-import { HmiRecipeRepository } from '../repositories';
-import { WorkstationRepository } from '../repositories';
+import {repository} from '@loopback/repository';
+import {del, get, param} from '@loopback/rest';
+import {promises as fsp} from 'fs';
+import {HmiRecipeRepository, WorkstationRepository} from '../repositories';
 
 export class HmiRecipeFileController {
   path: string = process.env.LB_FILE_PATH || '/home/jledun/io-suivi/files/';
@@ -116,7 +113,7 @@ export class HmiRecipeFileController {
         ((d.getMonth() + 1).toString().length < 2) ? `0${(d.getMonth() + 1).toString()}` : `${(d.getMonth() + 1).toString()}`,
         (d.getDate().toString().length < 2) ? `0${d.getDate().toString()}` : `${d.getDate().toString()}`,
       ].join('');
-      try{
+      try {
         let fileList = await fsp.readdir(this.path);
         fileList = fileList.filter(file => file.includes(fileName));
         fileName = [
@@ -148,7 +145,7 @@ export class HmiRecipeFileController {
                     `"${wsrecipes[t].alea.padEnd(8, " ")}"`,
                     `"${wsrecipes[t].label.padEnd(32, " ")}"`
                   ];
-                }else{
+                } else {
                   return [
                     `"${"".padEnd(8, " ")}"`,
                     `"${"".padEnd(8, " ")}"`,
@@ -163,7 +160,7 @@ export class HmiRecipeFileController {
         // écriture du fichier
         await fsp.writeFile(this.path.concat(fileName), recipes.join("\n").concat("\n"));
 
-      }catch(e){
+      } catch (e) {
         return reject(e);
       }
       return resolve({filename: fileName});

@@ -6,6 +6,10 @@ export class FabricationOrder extends Entity {
     type: 'number',
     id: true,
     generated: true,
+    description: 'identifiant unique',
+    mysql: {
+      comment: 'Identifiant unique'
+    }
   })
   id?: number;
 

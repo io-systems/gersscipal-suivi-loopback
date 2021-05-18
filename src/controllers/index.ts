@@ -8,3 +8,4 @@ export * from './ping.controller';
 export * from './workshop.controller';
 export * from './hmi-recipe.controller';
 export * from './hmi-recipe-file.controller';
+export * from './schema.controller';
