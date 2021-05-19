@@ -135,7 +135,7 @@ export class HmiRecipeFileController {
           // génération des lignes csv avec chaînes autocomplétées avec des espaces sur la longueur totale de la chaîne
           recipes.push(
             [
-              ws.codem,
+              `"${ws.codem.padEnd(8, " ")}"`,
             ].concat(
               this.indexes.map(i => {
                 const t = wsrecipes.findIndex(wsr => wsr.index === i);
