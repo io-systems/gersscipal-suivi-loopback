@@ -7,3 +7,4 @@ export * from './operation.model';
 export * from './workshop.model';
 export * from './workstation.model';
 export * from './hmi-recipe.model';
+export * from './counter.model';

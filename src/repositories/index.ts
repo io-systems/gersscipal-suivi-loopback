@@ -7,3 +7,4 @@ export * from './operation.repository';
 export * from './workshop.repository';
 export * from './workstation.repository';
 export * from './hmi-recipe.repository';
+export * from './counter.repository';
