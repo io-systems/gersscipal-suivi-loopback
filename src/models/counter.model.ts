@@ -19,6 +19,12 @@ export class Counter extends Entity {
   codem: string;
 
   @property({
+    type: 'date',
+    required: true,
+  })
+  timestamp?: string;
+
+  @property({
     type: 'number',
   })
   status?: number;
