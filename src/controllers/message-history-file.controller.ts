@@ -1,13 +1,14 @@
 // Uncomment these imports to begin using these cool features!
 
-// import {inject} from '@loopback/core';
+import {inject} from '@loopback/core';
 import {
   Filter,
   repository
 } from '@loopback/repository';
 import {
   del, get, param,
-  response
+  response,
+  Response, RestBindings
 } from '@loopback/rest';
 import {promises as fsp} from 'fs';
 import {MessageHistory} from '../models';
@@ -27,7 +28,8 @@ export class MessageHistoryFileController {
 
   constructor(
     @repository(MessageHistoryRepository)
-    public messageHistoryRepository: MessageHistoryRepository
+    public messageHistoryRepository: MessageHistoryRepository,
+    @inject(RestBindings.Http.RESPONSE) protected response: Response,
   ) { }
 
   @get('/message-history-file', {
@@ -102,19 +104,16 @@ export class MessageHistoryFileController {
     return this.getFileList();
   }
 
-  @get('/message-history-file/create-divalto-export', {
-    responses: {
-      '200': {
-        description: "create a new export file for divalto based on filtered datas",
-        content: {
-          'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                'filename': {
-                  type: 'string'
-                }
-              }
+  @get('/message-history-file/create-divalto-export')
+  @response(200, {
+    description: "create a new export file for divalto based on filtered datas",
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            filename: {
+              type: 'string'
             }
           }
         }
@@ -188,7 +187,11 @@ export class MessageHistoryFileController {
         }));
 
         // contrôle présence de données à exporter
-        if (divaltoMessages.length <= 0) return resolve("Filtre trop restrictif, aucune données à exporter");
+        if (divaltoMessages.length <= 0) {
+          this.response.status(204);
+          return resolve({filename: "Filtre trop restrictif, aucune données à exporter"});
+          // return resolve({filename: ""});
+        }
 
         // génération du fichier csv
         const lines: string[] = [];
