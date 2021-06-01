@@ -9,6 +9,7 @@ import {HmiRecipeRepository, WorkstationRepository} from '../repositories';
 export class HmiRecipeFileController {
   path: string = process.env.LB_FILE_PATH || '/home/jledun/io-suivi/files/';
   indexes: number[] = [];
+  prefix: string = "recette";
 
   constructor(
     @repository(HmiRecipeRepository) protected rdb: HmiRecipeRepository,
@@ -36,7 +37,14 @@ export class HmiRecipeFileController {
     }
   })
   async getFileList(): Promise<string[]> {
-    return fsp.readdir(this.path);
+    return new Promise(async (resolve, reject) => {
+      try {
+        const fileList = await fsp.readdir(this.path);
+        return resolve(fileList.filter(file => file.includes(this.prefix)));
+      } catch (e) {
+        return reject(e);
+      }
+    });
   }
 
   @get('/hmi-recipe-file/{filename}', {
@@ -63,7 +71,7 @@ export class HmiRecipeFileController {
   @del('/hmi-recipe-file/{filename}', {
     responses: {
       '200': {
-        description: "get csv file list hosted on the server",
+        description: "delete a csv file list hosted on the server",
         content: {
           'application/json': {
             schema: {
@@ -115,11 +123,12 @@ export class HmiRecipeFileController {
       ].join('');
       try {
         let fileList = await fsp.readdir(this.path);
-        fileList = fileList.filter(file => file.includes(fileName));
+        fileList = fileList.filter(file => file.includes(`${this.prefix}_${fileName}`));
+        let fileNumber = Number(fileList[fileList.length - 1].split(".")[0].split("_")[2]);
         fileName = [
-          "recette",
+          this.prefix,
           fileName,
-          fileList.length.toString().padStart(3, "0")
+          (fileNumber + 1).toString().padStart(3, "0")
         ].join("_").concat(".csv");
 
         // génération du fichier csv

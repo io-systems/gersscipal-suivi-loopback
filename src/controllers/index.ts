@@ -10,3 +10,4 @@ export * from './hmi-recipe.controller';
 export * from './hmi-recipe-file.controller';
 export * from './schema.controller';
 export * from './counter.controller';
+export * from './message-history-file.controller';
