@@ -1,0 +1,18 @@
+[Unit]
+Description=Loopback application for Gers Sci Pal
+Wants=network-online.target
+After=mariadb.service redis.service
+Documentation=https://loopback.io/
+
+[Service]
+Type=simple
+#User=jledun
+#Group=users
+Environment="LB_FILE_PATH=/home/jledun/Travail/gersscipal/io-suivi/files/"
+WorkingDirectory=/home/jledun/Travail/gersscipal/io-suivi/io-suivi-api
+ExecStart=/usr/bin/node -r source-map-support/register .
+KillSignal=SIGINT
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
