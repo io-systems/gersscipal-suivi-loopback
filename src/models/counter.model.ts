@@ -40,6 +40,16 @@ export class Counter extends Entity {
   cnt2?: number;
 
   @property({
+    type: 'number',
+  })
+  instantRate?: number;
+
+  @property({
+    type: 'number',
+  })
+  averageRate?: number;
+
+  @property({
     type: 'date',
   })
   createdAt?: string;
