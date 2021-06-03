@@ -51,6 +51,11 @@ export class Workstation extends Entity {
     }
   })
   localization?: string;
+  
+  @property({
+    type: 'number'
+  })
+  maxPalettePerHour?: number;
 
   @property({
     type: 'string',
