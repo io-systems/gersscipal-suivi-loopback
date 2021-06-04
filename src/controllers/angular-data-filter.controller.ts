@@ -9,7 +9,7 @@ import {AngularDataFilterRepository} from '../repositories';
 export class AngularDataFilterController {
   constructor(
     @repository(AngularDataFilterRepository)
-    public AngularDataFilterRepository: AngularDataFilterRepository
+    public angularDataFilterRepository: AngularDataFilterRepository
   ) { }
 
   // création, ajout, mise à jour d'un filtre dans un tableau hash
@@ -18,14 +18,14 @@ export class AngularDataFilterController {
     @param.path.string('hash') hash: string,
     @requestBody({description: 'Custom filter'}) filterContent: FilterContent
   ): Promise<void> {
-    const res = await this.AngularDataFilterRepository.get(hash);
+    const res = await this.angularDataFilterRepository.get(hash);
     let newFilter: AngularDataFilter;
     if (res == null) {
       newFilter = new AngularDataFilter({
         hash: hash,
         content: [filterContent]
       });
-      await this.AngularDataFilterRepository.set(hash, newFilter);
+      await this.angularDataFilterRepository.set(hash, newFilter);
 
     } else {
       if (res.content && res.content.length > 0) {
@@ -53,7 +53,7 @@ export class AngularDataFilterController {
           content: [filterContent]
         });
       }
-      await this.AngularDataFilterRepository.set(hash, newFilter);
+      await this.angularDataFilterRepository.set(hash, newFilter);
     }
   }
 
@@ -62,7 +62,7 @@ export class AngularDataFilterController {
   async get(
     @param.path.string('hash') hash: string
   ): Promise<AngularDataFilter> {
-    return await this.AngularDataFilterRepository.get(hash);
+    return this.angularDataFilterRepository.get(hash);
   }
 
   // supprimer un filtre du tableau de filtres hash
@@ -71,7 +71,7 @@ export class AngularDataFilterController {
     @param.path.string('hash') hash: string,
     @param.path.string('name') name: string,
   ): Promise<void> {
-    const res = await this.AngularDataFilterRepository.get(hash);
+    const res = await this.angularDataFilterRepository.get(hash);
     if (!res.content || res.content.length <= 0) return;
     // look after filter name
     const index = res.content.findIndex(fil => fil.name === name);
@@ -81,7 +81,7 @@ export class AngularDataFilterController {
       hash: hash,
       content: res.content
     });
-    await this.AngularDataFilterRepository.set(hash, newFilter);
+    await this.angularDataFilterRepository.set(hash, newFilter);
   }
 
   // supprimer tout le contenu pour un hash
@@ -89,7 +89,7 @@ export class AngularDataFilterController {
   async delete(
     @param.path.string('hash') hash: string
   ): Promise<void> {
-    const res = await this.AngularDataFilterRepository.delete(hash);
+    await this.angularDataFilterRepository.delete(hash);
   }
 
 }
