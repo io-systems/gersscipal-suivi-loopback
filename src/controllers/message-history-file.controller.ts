@@ -24,7 +24,7 @@ interface divaltoMessage {
 
 export class MessageHistoryFileController {
   path: string = process.env.LB_FILE_PATH || '/home/jledun/io-suivi/files/';
-  prefix: string = "alea";
+  prefix = "alea";
 
   constructor(
     @repository(MessageHistoryRepository)
@@ -134,7 +134,10 @@ export class MessageHistoryFileController {
       try {
         let fileList = await fsp.readdir(this.path);
         fileList = fileList.filter(file => file.includes(`${this.prefix}_${fileName}`));
-        let fileNumber = Number(fileList[fileList.length - 1].split(".")[0].split("_")[2]);
+        let fileNumber = 0;
+        if (fileList && fileList.length > 0) {
+          fileNumber = Number(fileList[fileList.length - 1].split(".")[0].split("_")[2]);
+        }
         fileName = [
           this.prefix,
           fileName,
@@ -142,7 +145,7 @@ export class MessageHistoryFileController {
         ].join("_").concat(".csv");
 
         // filtrage par défaut
-        let fil: Filter<MessageHistory> = filter || {};
+        const fil: Filter<MessageHistory> = filter || {};
         fil.order = ["timestamp ASC"];
 
         // lecture des messages filtrées
@@ -197,7 +200,7 @@ export class MessageHistoryFileController {
         const lines: string[] = [];
         // première ligne
         lines.push(Object.keys(divaltoMessages[0]).map(val => `"${val}"`).join(", "));
-        for (let message of divaltoMessages) {
+        for (const message of divaltoMessages) {
           lines.push(Object.values(message).map(val => `"${val}"`).join(", "));
         }
 
