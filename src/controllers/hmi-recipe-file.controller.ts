@@ -9,7 +9,7 @@ import {HmiRecipeRepository, WorkstationRepository} from '../repositories';
 export class HmiRecipeFileController {
   path: string = process.env.LB_FILE_PATH || '/home/jledun/io-suivi/files/';
   indexes: number[] = [];
-  prefix: string = "recette";
+  prefix = "recette";
 
   constructor(
     @repository(HmiRecipeRepository) protected rdb: HmiRecipeRepository,
@@ -124,7 +124,10 @@ export class HmiRecipeFileController {
       try {
         let fileList = await fsp.readdir(this.path);
         fileList = fileList.filter(file => file.includes(`${this.prefix}_${fileName}`));
-        let fileNumber = Number(fileList[fileList.length - 1].split(".")[0].split("_")[2]);
+        let fileNumber = 0;
+        if (fileList && fileList.length > 0) {
+          fileNumber = Number(fileList[fileList.length - 1].split(".")[0].split("_")[2]);
+        }
         fileName = [
           this.prefix,
           fileName,
@@ -134,9 +137,9 @@ export class HmiRecipeFileController {
         // génération du fichier csv
         // lecture des postes de travail disponibles sur l'application
         const workstations = await this.wsdb.find();
-        let recipes = [];
-        for (let ws of workstations) {
-          let wsrecipes = await this.rdb.find({
+        const recipes = [];
+        for (const ws of workstations) {
+          const wsrecipes = await this.rdb.find({
             where: {
               codem: ws.codem
             }
