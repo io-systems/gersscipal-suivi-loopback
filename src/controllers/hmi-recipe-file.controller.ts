@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 // Uncomment these imports to begin using these cool features!
 
 // import {inject} from '@loopback/core';
@@ -9,7 +10,7 @@ import {HmiRecipeRepository, WorkstationRepository} from '../repositories';
 export class HmiRecipeFileController {
   path: string = process.env.LB_FILE_PATH || '/home/jledun/io-suivi/files/';
   indexes: number[] = [];
-  prefix = "recette";
+  prefix = "RecipeGroup1";
 
   constructor(
     @repository(HmiRecipeRepository) protected rdb: HmiRecipeRepository,
@@ -113,6 +114,7 @@ export class HmiRecipeFileController {
     }
   })
   createCsvFile(): Promise<any> {
+    // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve, reject): Promise<any> => {
       // génération du nom du fichier
       const d = new Date();
@@ -126,15 +128,21 @@ export class HmiRecipeFileController {
         fileList = fileList.filter(file => file.includes(`${this.prefix}_${fileName}`));
         let fileNumber = 0;
         if (fileList && fileList.length > 0) {
-          fileNumber = Number(fileList[fileList.length - 1].split(".")[0].split("_")[2]);
+          fileNumber = Number(fileList[fileList.length - 1].split('.')[0].split('_')[2]);
         }
         fileName = [
           this.prefix,
           fileName,
           (fileNumber + 1).toString().padStart(3, "0")
-        ].join("_").concat(".csv");
+        ].join("_").concat('.csv');
 
-        // génération du fichier csv
+        // lecture du template de fichier recette Vijéo
+        const header = await fsp.readFile(this.path.concat(`templates/${this.prefix}_template.csv`), 'utf-8');
+        if (!header) {
+          return reject(new Error('Erreur de configuration'));
+        }
+
+        // génération des données csv
         // lecture des postes de travail disponibles sur l'application
         const workstations = await this.wsdb.find();
         const recipes = [];
@@ -147,30 +155,36 @@ export class HmiRecipeFileController {
           // génération des lignes csv avec chaînes autocomplétées avec des espaces sur la longueur totale de la chaîne
           recipes.push(
             [
-              `"${ws.codem.padEnd(8, " ")}"`,
+              'Recipe Ingredient',
+              `${ws.codem}`
             ].concat(
               this.indexes.map(i => {
                 const t = wsrecipes.findIndex(wsr => wsr.index === i);
                 if (t > -1) {
                   return [
-                    `"${wsrecipes[t].operation.padEnd(8, " ")}"`,
-                    `"${wsrecipes[t].alea.padEnd(8, " ")}"`,
-                    `"${wsrecipes[t].label.padEnd(32, " ")}"`
+                    `"${wsrecipes[t].operation.padEnd(8, ' ')}"`,
+                    `"${wsrecipes[t].alea.padEnd(8, ' ')}"`,
+                    `"${wsrecipes[t].label.padEnd(32, ' ')}"`
                   ];
                 } else {
                   return [
-                    `"${"".padEnd(8, " ")}"`,
-                    `"${"".padEnd(8, " ")}"`,
-                    `"${"".padEnd(32, " ")}"`
+                    `"${"".padEnd(8, ' ')}"`,
+                    `"${"".padEnd(8, ' ')}"`,
+                    `"${"".padEnd(32, ' ')}"`
                   ];
                 }
               }).flat()
-            ).flat().join(", ")
+            ).concat([
+              `"${ws.codem.padEnd(8, ' ')}"`
+            ]).flat().join('; ')
           );
         }
 
+        const data2Write = header.concat(recipes.join('\n'), '\n');
+        console.log(data2Write);
+
         // écriture du fichier
-        await fsp.writeFile(this.path.concat(fileName), recipes.join("\n").concat("\n"));
+        await fsp.writeFile(this.path.concat(fileName), data2Write);
 
       } catch (e) {
         return reject(e);
