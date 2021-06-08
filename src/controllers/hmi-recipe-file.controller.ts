@@ -137,7 +137,7 @@ export class HmiRecipeFileController {
         ].join("_").concat('.csv');
 
         // lecture du template de fichier recette Vijéo
-        const header = await fsp.readFile(this.path.concat(`templates/${this.prefix}_template.csv`), 'utf-8');
+        const header = await fsp.readFile(this.path.concat(`templates/${this.prefix}_template.csv`), 'utf8');
         if (!header) {
           return reject(new Error('Erreur de configuration'));
         }
@@ -191,7 +191,7 @@ export class HmiRecipeFileController {
         const data2Write = header.concat(recipes.join('\n'), '\n');
 
         // écriture du fichier
-        await fsp.writeFile(this.path.concat(fileName), data2Write);
+        await fsp.writeFile(this.path.concat(fileName), data2Write, 'ascii');
 
       } catch (e) {
         return reject(e);
