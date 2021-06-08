@@ -145,7 +145,7 @@ export class HmiRecipeFileController {
         // génération des données csv
         // lecture des postes de travail disponibles sur l'application
         const workstations = await this.wsdb.find();
-        const recipes: string[] = []; let index = 0;
+        const recipes: string[] = []; let index = 1;
         for (const ws of workstations) {
           const wsrecipes = await this.rdb.find({
             where: {
@@ -189,7 +189,6 @@ export class HmiRecipeFileController {
         }
 
         const data2Write = header.concat(recipes.join('\n'), '\n');
-        console.log(data2Write);
 
         // écriture du fichier
         await fsp.writeFile(this.path.concat(fileName), data2Write);
