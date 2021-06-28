@@ -52,6 +52,36 @@ export class HmiRecipe extends Entity {
   label: string;
 
   @property({
+    type: 'string',
+    required: false,
+    default: '',
+    mysql: {
+      dataType: 'VARCHAR(16)'
+    }
+  })
+  btnTextFR: string;
+
+  @property({
+    type: 'string',
+    required: false,
+    default: '',
+    mysql: {
+      dataType: 'VARCHAR(16)'
+    }
+  })
+  btnTextHU: string;
+
+  @property({
+    type: 'string',
+    required: false,
+    default: '',
+    mysql: {
+      dataType: 'VARCHAR(16)'
+    }
+  })
+  btnTextEN: string;
+
+  @property({
     type: 'date',
   })
   createdAt?: string;
