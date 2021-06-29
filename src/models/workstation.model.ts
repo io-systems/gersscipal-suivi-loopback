@@ -1,6 +1,4 @@
-import {Entity, model, property, belongsTo, hasMany} from '@loopback/repository';
-import {Workshop} from './workshop.model';
-import {FabricationOrder} from './fabrication-order.model';
+import {Entity, model, property} from '@loopback/repository';
 
 @model()
 export class Workstation extends Entity {
@@ -51,11 +49,24 @@ export class Workstation extends Entity {
     }
   })
   localization?: string;
-  
+
   @property({
     type: 'number'
   })
   maxPalettePerHour?: number;
+
+  @property({
+    type: 'boolean'
+  })
+  active?: boolean;
+
+  @property({
+    type: 'string',
+    mysql: {
+      dataType: 'VARCHAR(16)'
+    }
+  })
+  unit?: string;
 
   @property({
     type: 'string',
