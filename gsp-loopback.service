@@ -6,10 +6,10 @@ Documentation=https://loopback.io/
 
 [Service]
 Type=simple
-#User=jledun
-#Group=users
-Environment="LB_FILE_PATH=/home/jledun/Travail/gersscipal/io-suivi/files/"
-WorkingDirectory=/home/jledun/Travail/gersscipal/io-suivi/io-suivi-api
+User=loopback
+Group=loopback
+Environment="LB_FILE_PATH=/var/lib/loopback/files/"
+WorkingDirectory=/var/lib/loopback/io-suivi-api
 ExecStart=/usr/bin/node -r source-map-support/register .
 KillSignal=SIGINT
 Restart=on-failure
