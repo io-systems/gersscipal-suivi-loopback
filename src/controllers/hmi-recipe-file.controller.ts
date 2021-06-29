@@ -296,9 +296,9 @@ export class HmiRecipeFileController {
                   ];
                 } else {
                   return [
-                    '.',
-                    '.',
-                    '.'
+                    ' ',
+                    ' ',
+                    ' '
                   ];
                 }
               }).flat()
