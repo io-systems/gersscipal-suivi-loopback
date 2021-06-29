@@ -296,9 +296,9 @@ export class HmiRecipeFileController {
                   ];
                 } else {
                   return [
-                    `TagFR_${i - 16}`,
-                    `TagHU_${i - 16}`,
-                    `TagEN_${i - 16}`
+                    '.',
+                    '.',
+                    '.'
                   ];
                 }
               }).flat()
