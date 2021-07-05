@@ -61,6 +61,7 @@ export class MessageHistoryController {
         break;
 
       case 'PROD':
+        if (!tmpOF.ofnr) break;
         tmp = await this.ofDB.find({
           where: {
             and: [
