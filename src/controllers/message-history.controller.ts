@@ -4,27 +4,22 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
+  del, get,
+  getModelSchemaRef, param, patch, post, put, requestBody,
+  response
 } from '@loopback/rest';
-import {MessageHistory} from '../models';
-import {MessageHistoryRepository} from '../repositories';
+import {FabricationOrder, MessageHistory} from '../models';
+import {FabricationOrderRepository, MessageHistoryRepository, MessageStandardRepository} from '../repositories';
 
 export class MessageHistoryController {
   constructor(
-    @repository(MessageHistoryRepository)
-    public messageHistoryRepository : MessageHistoryRepository,
-  ) {}
+    @repository(MessageHistoryRepository) public messageHistoryRepository: MessageHistoryRepository,
+    @repository(MessageStandardRepository) public aleaDB: MessageStandardRepository,
+    @repository(FabricationOrderRepository) public ofDB: FabricationOrderRepository,
+  ) { }
 
   @post('/message-histories')
   @response(200, {
@@ -44,6 +39,53 @@ export class MessageHistoryController {
     })
     messageHistory: Omit<MessageHistory, 'id'>,
   ): Promise<MessageHistory> {
+    let tmp;
+    const tmpOF: FabricationOrder = new FabricationOrder({
+      ofnr: messageHistory.ofnr,
+      codem: messageHistory.codem
+    });
+    switch (messageHistory.operation) {
+      case 'VOYANT':
+        tmp = await this.aleaDB.find({
+          where: {
+            and: [
+              {operation: messageHistory.operation},
+              {alea: messageHistory.alea}
+            ]
+          }, fields: {
+            label: true
+          }
+        });
+        if (tmp.length < 1) break;
+        messageHistory.label = tmp[0].label ?? '';
+        break;
+
+      case 'PROD':
+        tmp = await this.ofDB.find({
+          where: {
+            and: [
+              {ofnr: tmpOF.ofnr},
+              {codem: tmpOF.codem}
+            ]
+          }
+        });
+        // détermination démarrage ou arrêt OF
+        if (messageHistory.alea.toUpperCase().includes('STAR')) {
+          tmpOF.startedAt = messageHistory.timestamp;
+        }
+        if (messageHistory.alea.toUpperCase().includes('STOP')) {
+          tmpOF.stoppedAt = messageHistory.timestamp;
+        }
+        if (tmp.length < 1) {
+          await this.ofDB.create(tmpOF);
+        } else {
+          await this.ofDB.updateById(tmp[0].id, tmpOF);
+        }
+        break;
+
+      default:
+        break;
+    }
     return this.messageHistoryRepository.create(messageHistory);
   }
 
