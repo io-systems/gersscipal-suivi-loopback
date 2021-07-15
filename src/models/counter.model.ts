@@ -21,6 +21,9 @@ export class Counter extends Entity {
   @property({
     type: 'date',
     required: true,
+    mysql: {
+      dataType: "TIMESTAMP"
+    }
   })
   timestamp?: string;
 
