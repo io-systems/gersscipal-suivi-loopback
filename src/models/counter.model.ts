@@ -22,7 +22,7 @@ export class Counter extends Entity {
     type: 'date',
     required: true,
     mysql: {
-      dataType: "TIMESTAMP"
+      dataType: "DATETIME"
     }
   })
   timestamp?: string;
