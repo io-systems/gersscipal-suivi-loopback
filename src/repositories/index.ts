@@ -9,3 +9,4 @@ export * from './operation.repository';
 export * from './workshop.repository';
 export * from './workstation.repository';
 export * from './app-setup.repository';
+export * from './productivity.repository';

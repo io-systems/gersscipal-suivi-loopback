@@ -9,3 +9,4 @@ export * from './operation.model';
 export * from './workshop.model';
 export * from './workstation.model';
 export * from './app-setup.model';
+export * from './productivity.model';

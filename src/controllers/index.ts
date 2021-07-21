@@ -13,3 +13,4 @@ export * from './ping.controller';
 export * from './schema.controller';
 export * from './workshop.controller';
 
+export * from './productivity.controller';
