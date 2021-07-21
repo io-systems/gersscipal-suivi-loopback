@@ -1,7 +1,7 @@
 import {Entity, model, property} from '@loopback/repository';
 
 @model()
-export class Productivity extends Entity {
+export class ShiftSchedule extends Entity {
   @property({
     type: 'number',
     id: true,
@@ -16,37 +16,36 @@ export class Productivity extends Entity {
       dataType: 'VARCHAR(8)'
     }
   })
-  codem: string;
+  shift: string;
 
   @property({
-    type: 'date',
-    required: true,
+    type: 'string',
+    mysql: {
+      dataType: 'VARCHAR(8)'
+    }
   })
-  timestamp: string;
-
-  @property({
-    type: 'number',
-    default: 0,
-  })
-  tb?: number;
+  day?: string;
 
   @property({
     type: 'number',
-    default: 0,
   })
-  tp?: number;
+  weekDay?: number;
 
   @property({
-    type: 'number',
-    default: 0,
+    type: 'string',
+    mysql: {
+      dataType: 'VARCHAR(5)'
+    }
   })
-  tq?: number;
+  start?: string;
 
   @property({
-    type: 'number',
-    default: 0,
+    type: 'string',
+    mysql: {
+      dataType: 'VARCHAR(5)'
+    }
   })
-  trs?: number;
+  end?: string;
 
   @property({
     type: 'date',
@@ -59,13 +58,13 @@ export class Productivity extends Entity {
   updatedAt?: string;
 
 
-  constructor(data?: Partial<Productivity>) {
+  constructor(data?: Partial<ShiftSchedule>) {
     super(data);
   }
 }
 
-export interface ProductivityRelations {
+export interface ShiftScheduleRelations {
   // describe navigational properties here
 }
 
-export type ProductivityWithRelations = Productivity & ProductivityRelations;
+export type ShiftScheduleWithRelations = ShiftSchedule & ShiftScheduleRelations;

@@ -10,3 +10,5 @@ export * from './workshop.model';
 export * from './workstation.model';
 export * from './app-setup.model';
 export * from './productivity.model';
+export * from './shift.model';
+export * from './shift-schedule.model';

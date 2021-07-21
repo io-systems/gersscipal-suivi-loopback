@@ -14,3 +14,5 @@ export * from './schema.controller';
 export * from './workshop.controller';
 
 export * from './productivity.controller';
+export * from './shift.controller';
+export * from './shift-schedule.controller';

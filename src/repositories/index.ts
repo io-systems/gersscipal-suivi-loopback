@@ -10,3 +10,5 @@ export * from './workshop.repository';
 export * from './workstation.repository';
 export * from './app-setup.repository';
 export * from './productivity.repository';
+export * from './shift-schedule.repository';
+export * from './shift.repository';
