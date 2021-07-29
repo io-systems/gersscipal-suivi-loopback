@@ -9,7 +9,9 @@ const config = {
   port: 3306,
   user: 'lbuser',
   password: 'eedo8Ii)D3ahroo}',
-  database: 'iotdb'
+  database: 'iotdb',
+  timeZone: 'local',
+  legacyUtcDateProcessing: false,
 };
 
 // Observe application's life cycle to disconnect the datasource when
