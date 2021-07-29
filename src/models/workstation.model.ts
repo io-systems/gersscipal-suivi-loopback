@@ -69,6 +69,11 @@ export class Workstation extends Entity {
   unit?: string;
 
   @property({
+    type: 'number'
+  })
+  recordingRate?: number;
+
+  @property({
     type: 'string',
   })
   description?: string;
